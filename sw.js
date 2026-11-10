@@ -1,10 +1,12 @@
-// Offline-first service worker: the whole app is cached so it works in tunnels / without signal.
-const CACHE = 'ielts-koc-v1';
+// Offline service worker: fresh files when the network answers quickly, cached files in tunnels / without signal.
+const CACHE = 'ielts-koc-v2';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './content.js',
+  './learn.js',
+  './glossary.js',
   './app.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
@@ -24,17 +26,16 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Stale-while-revalidate for same-origin GETs: instant from cache, refreshed in the background.
+// Network-first with a short timeout, so updates arrive immediately but a weak signal never blocks the app.
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
-  e.respondWith(
-    caches.open(CACHE).then(async (cache) => {
-      const cached = await cache.match(req, { ignoreSearch: true });
-      const network = fetch(req)
-        .then((res) => { if (res && res.ok) cache.put(req, res.clone()); return res; })
-        .catch(() => cached);
-      return cached || network;
-    })
-  );
+  e.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(req, { ignoreSearch: true });
+    const network = fetch(req).then((res) => { if (res && res.ok) cache.put(req, res.clone()); return res; });
+    if (!cached) return network;
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(cached), 2500));
+    return Promise.race([network.catch(() => cached), timeout]);
+  })());
 });

@@ -20,6 +20,8 @@ Listening için: Ayarlar → Metin okuma çıktısı → Google → English (UK)
 | Dosya | İçerik |
 |---|---|
 | `content.js` | Gramer üniteleri, reading metinleri, listening senaryoları, writing görevleri, kelimeler. Yeni içerik buraya eklenir. |
+| `learn.js` | Band 7+ model yazılar, cümle bankası, gramer ünitelerinin çevirili örnekleri |
+| `glossary.js` | Dokun-öğren sözlüğü (offline İngilizce → Türkçe). Burada olmayan kelimeler internetten aranır. |
 | `app.js` | Günlük plan, alıştırma motoru, aralıklı tekrar, ilerleme |
 | `sw.js` | Offline önbellek. İçerik değişince `CACHE` sürümünü artır. |
 
