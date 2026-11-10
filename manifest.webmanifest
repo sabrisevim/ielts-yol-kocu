@@ -1,0 +1,17 @@
+{
+  "name": "IELTS Yol Koçu",
+  "short_name": "IELTS Koç",
+  "description": "Yolda IELTS Academic hazırlığı: gramer, cümle kurma, reading, listening, writing ve kelime.",
+  "lang": "tr",
+  "start_url": "./#/today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#16324f",
+  "theme_color": "#16324f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
